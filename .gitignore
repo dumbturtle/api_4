@@ -128,5 +128,6 @@ dmypy.json
 .vscode
 .vscode/settings.json
 .DS_Store
+images
 
 setup.cfg

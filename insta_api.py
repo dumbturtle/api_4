@@ -32,8 +32,9 @@ def main():
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
     link = "https://upload.wikimedia.org/wikipedia/commons/3/3f/HST-SM4.jpeg"
     filename = "hubble.jpeg"
+    folder = "./images"
     try:
-        print(download_image(link, filename))
+        print(download_image(link, filename, folder))
     except (requests.ConnectionError, requests.HTTPError):
         print("Что-то пошло не так:( Проверьте подключение к интернету!")
 
