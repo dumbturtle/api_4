@@ -28,24 +28,25 @@ def download_image(link: str, filename: str, folder: str = "./") -> str:
     return file_with_data_filepath
 
 
-def get_spacex_image_links(link_api: str) -> list:
-    spacex_api_conten = get_data_from_link(link_api)
-    spacex_image_links = spacex_api_conten.json().get("links").get("flickr_images")
-    return spacex_image_links
+def fetch_spacex_last_launch(link_api: str) -> list:
+    folder = "./images"
+    images_filepaths = []
+    try:
+        spacex_api_conten = get_data_from_link(link_api)
+        spacex_image_links = spacex_api_conten.json().get("links").get("flickr_images")
+        for image_number, link in enumerate(spacex_image_links):
+            filename = f"spacex{ image_number }.jpg"
+            image_filepath = download_image(link, filename, folder)
+            images_filepaths.append(image_filepath)
+    except (requests.ConnectionError, requests.HTTPError):
+        images_filepaths = ["Что-то пошло не так:( Проверьте подключение к интернету!"]
+    return images_filepaths
 
 
 def main():
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-    folder = "./images"
     spacex_link_api = "https://api.spacexdata.com/v3/launches/67"
-    try:
-        spacex_image_links = get_spacex_image_links(spacex_link_api)
-        for image_number, link in enumerate(spacex_image_links):
-            filename = f"spacex{ image_number }.jpg"
-            image_filepath = download_image(link, filename, folder)
-            print(image_filepath)
-    except (requests.ConnectionError, requests.HTTPError):
-        print("Что-то пошло не так:( Проверьте подключение к интернету!")
+    print(fetch_spacex_last_launch(spacex_link_api))
 
 
 if __name__ == "__main__":
