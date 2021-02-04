@@ -31,22 +31,27 @@ def download_image(link: str, filename: str, folder: str = "./") -> str:
 def fetch_spacex_last_launch(link_api: str) -> list:
     folder = "./images"
     images_filepaths = []
-    try:
-        spacex_api_conten = get_data_from_link(link_api)
-        spacex_image_links = spacex_api_conten.json().get("links").get("flickr_images")
-        for image_number, link in enumerate(spacex_image_links):
-            filename = f"spacex{ image_number }.jpg"
-            image_filepath = download_image(link, filename, folder)
-            images_filepaths.append(image_filepath)
-    except (requests.ConnectionError, requests.HTTPError):
-        images_filepaths = ["Что-то пошло не так:( Проверьте подключение к интернету!"]
+    spacex_api_conten = get_data_from_link(link_api)
+    spacex_image_links = spacex_api_conten.json().get("links").get("flickr_images")
+    for image_number, link in enumerate(spacex_image_links):
+        filename = f"spacex{ image_number }.jpg"
+        image_filepath = download_image(link, filename, folder)
+        images_filepaths.append(image_filepath)
     return images_filepaths
 
+
+def fetch_hable_photo(link_api: str) -> list:
+    folder = "./images"
+    images_filepaths = []
+    hable_api_conten = get_data_from_link(link_api)
+    hable_image_links = [f'https:{image_info.get("file_url")}' for image_info in hable_api_conten.json().get("image_files")]
+    return hable_image_links
 
 def main():
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
     spacex_link_api = "https://api.spacexdata.com/v3/launches/67"
-    print(fetch_spacex_last_launch(spacex_link_api))
+    hable_link_api = "http://hubblesite.org//api/v3/image/1"
+    print(fetch_hable_photo(hable_link_api))
 
 
 if __name__ == "__main__":
