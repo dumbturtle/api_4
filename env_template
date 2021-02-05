@@ -1,0 +1,6 @@
+#Instagram credential
+INSTAGRAM_USERNAME="Your login"
+INSTAGRAM_PASSWORD="Your password"
+
+#Download settings
+IMAGES_FOLDER="images"
