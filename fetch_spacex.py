@@ -1,12 +1,13 @@
+import os
+
 import requests
+from dotenv import load_dotenv
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-from handler import (
-    change_image_size_proportions,
-    convert_image_to_jpg,
-    download_image,
-    get_data_from_link,
-)
+from handler import (change_image_size_proportions, convert_image_to_jpg,
+                     download_image, get_data_from_link)
+
+load_dotenv()
 
 
 def fetch_spacex_launch(
@@ -27,10 +28,13 @@ def fetch_spacex_launch(
 
 def main():
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-    spacex_image_link_api = "https://api.spacexdata.com/v3/launches"
-    launche_id = "67"
+    spacex_image_link_api = os.environ["SPACEX_IMAGE_LINK_API"]
+    launche_id = os.environ["LAUNCHE_ID"]
+    image_folder = os.environ["IMAGE_FOLDER"]
     try:
-        fetched_images = fetch_spacex_launch(spacex_image_link_api, launche_id)
+        fetched_images = fetch_spacex_launch(
+            spacex_image_link_api, launche_id, image_folder
+        )
         print(fetched_images)
     except (requests.ConnectionError, requests.HTTPError):
         print("Что-то пошло не так. Проверьте соединение с интернетом.")

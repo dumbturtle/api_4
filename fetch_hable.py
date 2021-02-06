@@ -1,13 +1,13 @@
+import os
+
 import requests
+from dotenv import load_dotenv
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-from handler import (
-    change_image_size_proportions,
-    convert_image_to_jpg,
-    get_data_from_link,
-    download_image,
-    get_image_extension,
-)
+from handler import (change_image_size_proportions, convert_image_to_jpg,
+                     download_image, get_data_from_link, get_image_extension)
+
+load_dotenv()
 
 
 def fetch_hable_photo(
@@ -37,15 +37,18 @@ def fetch_hable_image_id(collection_link_api: str, collection_name: str) -> list
 
 def main():
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-    hable_image_link_api = "http://hubblesite.org//api/v3/image/"
-    hable_collection_link_api = "http://hubblesite.org//api/v3/images/"
-    hable_collection_name = "stsci_gallery"
+    hable_image_link_api = os.environ["HABLE_IMAGE_LINK_API"]
+    hable_collection_link_api = os.environ["HABLE_COLLECTION_LINK_API"]
+    hable_collection_name = os.environ["HABLE_COLLECTION_NAME"]
+    image_folder = os.environ["IMAGE_FOLDER"]
     try:
         hable_image_range_id = fetch_hable_image_id(
             hable_collection_link_api, hable_collection_name
         )
         for hable_image_id in hable_image_range_id:
-            fetched_images = fetch_hable_photo(hable_image_link_api, hable_image_id)
+            fetched_images = fetch_hable_photo(
+                hable_image_link_api, hable_image_id, image_folder
+            )
             print(fetched_images)
     except (requests.ConnectionError, requests.HTTPError):
         print("Что-то пошло не так. Проверьте соединение с интернетом.")
