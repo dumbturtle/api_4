@@ -43,7 +43,7 @@ $ python load_instagram.py
 - `HABLE_COLLECTION_LINK_API` в данном параметре указывается ссылка на раздел API с коллекциями фотографий.
 - `HABLE_COLLECTION_NAME` в данном параметре указывается название коллекции. Список коллекций [ссылка](http://hubblesite.org/api/documentation#images).
 
-Пример раздела в файле конфигурации:
+Пример раздела `Hable API settings` в файле конфигурации:
 ```
 #Hable API settings
 HABLE_IMAGE_LINK_API="http://hubblesite.org//api/v3/image/"
@@ -56,7 +56,7 @@ HABLE_COLLECTION_NAME="stsci_gallery"
 - `SPACEX_IMAGE_LINK_API` в данном параметре указывается ссылка на раздел API в котором хранятся фотографии запусков.
 - `LAUNCHE_ID` в данном параметре указывается номер запуска. Для получения фотографий последнего запуска, необходимо присвоить переменной значение `last`.
 
-Пример раздела в файле конфигурации:
+Пример раздела `SpaceX API settings` в файле конфигурации:
 ```
 #SpaceX API settings
 SPACEX_IMAGE_LINK_API="https://api.spacexdata.com/v3/launches" 
@@ -67,7 +67,7 @@ LAUNCHE_ID="64"
 - `INSTAGRAM_USERNAME` в данном параметре указывается имя пользователя для Instagram.
 - `INSTAGRAM_PASSWORD` в данном параметре указывается пароль для Instagram.
 
-Пример раздела в файле конфигурации:
+Пример раздела `Instagram credential` в файле конфигурации:
 ```
 #Instagram credential
 INSTAGRAM_USERNAME="Your login"
