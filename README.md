@@ -41,7 +41,7 @@ $ python load_instagram.py
 
 - `HABLE_IMAGE_LINK_API` в данном параметре указывается ссылка на раздел API с фотографиями. 
 - `HABLE_COLLECTION_LINK_API` в данном параметре указывается ссылка на раздел API с коллекциями фотографий.
-- `HABLE_COLLECTION_NAME` в данном параметре указывается название коллекции. Список коллекций [ссылка](#http://hubblesite.org/api/documentation#images).
+- `HABLE_COLLECTION_NAME` в данном параметре указывается название коллекции. Список коллекций [ссылка](http://hubblesite.org/api/documentation#images).
 
 Пример раздела в файле конфигурации:
 ```
