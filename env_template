@@ -12,4 +12,4 @@ HABLE_COLLECTION_NAME="stsci_gallery"
 
 #SpaceX API settings
 SPACEX_IMAGE_LINK_API="https://api.spacexdata.com/v3/launches" 
-LAUNCHE_ID="64"
+LAUNCH_ID="64"
