@@ -24,9 +24,9 @@ def download_image(
     checked_folder = sanitize_filepath(image_folder)
     checked_filename = sanitize_filename(image_filename)
     Path(f"./{ image_folder }").mkdir(parents=True, exist_ok=True)
-    string_filepath = os.path.join(checked_folder, checked_filename)
+    filepath = os.path.join(checked_folder, checked_filename)
     image_data = get_data_from_link(image_link)
-    file_with_data_filepath = write_image_to_file(image_data.content, string_filepath)
+    file_with_data_filepath = write_image_to_file(image_data.content, filepath)
     return file_with_data_filepath
 
 
