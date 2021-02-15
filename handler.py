@@ -32,12 +32,13 @@ def convert_image_to_jpg(image_filepath: str) -> str:
     image_filepath_without_extension, image_extension = os.path.splitext(image_filepath)
     if image_extension == ".jpg":
         return image_filepath
-    image_filepath_with_jpg_extension= f"{ image_filepath_without_extension }.jpg"
-    image.save(image_filepath_with_jpg_extension, format="JPEG")
-    if os.path.exists(image_filepath_with_jpg_extension):
+    try:
+        image_filepath_with_jpg_extension= f"{ image_filepath_without_extension }.jpg"
+        image.save(image_filepath_with_jpg_extension, format="JPEG")
+    finally:
         os.remove(image_filepath)
     return image_filepath_with_jpg_extension
-    
+
 
 def change_image_size_proportions(image_filepath: str):
     image = Image.open(image_filepath)
