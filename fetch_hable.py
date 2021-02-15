@@ -17,7 +17,7 @@ from handler import (
 def fetch_hable_photo(
     image_link_api: str, image_id: int, image_folder: str = "./images"
 ) -> list:
-    images_filepaths = []
+    image_filepaths = []
     hable_api_content = get_data_from_link(f"{image_link_api}{image_id}")
     hable_image_links = [
         f'https:{image_info.get("file_url")}'
@@ -28,15 +28,15 @@ def fetch_hable_photo(
         image_filename = f"{ image_id }hable{ image_number}.{ image_extension }"
         image_filepath = download_image(image_link, image_filename, image_folder)
         change_image_size_proportions(image_filepath)
-        image_filepath_jpg = convert_image_to_jpg(image_filepath)
-        images_filepaths.append(image_filepath_jpg)
-    return images_filepaths
+        image_jpg_filepath = convert_image_to_jpg(image_filepath)
+        image_filepaths.append(image_jpg_filepath)
+    return image_filepaths
 
 
 def fetch_hable_image_id(collection_link_api: str, collection_name: str) -> list:
     hable_api_content = get_data_from_link(f"{collection_link_api}{collection_name}")
-    hable_images_id = [image_id.get("id") for image_id in hable_api_content.json()]
-    return hable_images_id
+    hable_image_ids = [image_id.get("id") for image_id in hable_api_content.json()]
+    return hable_image_ids
 
 
 def main():

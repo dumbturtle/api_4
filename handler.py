@@ -19,9 +19,9 @@ def write_image_to_file(data: bytes, full_path_file: str) -> str:
 def download_image(
     image_link: str, image_filename: str, image_folder: str = "./"
 ) -> str:
-    checked_folder = sanitize_filepath(image_folder)
-    checked_filename = sanitize_filename(image_filename)
-    filepath = os.path.join(checked_folder, checked_filename)
+    sanitized_folder = sanitize_filepath(image_folder)
+    sanitized_filename = sanitize_filename(image_filename)
+    filepath = os.path.join(sanitized_folder, sanitized_filename)
     image_data = get_data_from_link(image_link)
     write_image_to_file(image_data.content, filepath)
     return filepath
@@ -32,11 +32,11 @@ def convert_image_to_jpg(image_filepath: str) -> str:
     image_filepath_without_extension, image_extension = os.path.splitext(image_filepath)
     if image_extension == ".jpg":
         return image_filepath
-    image_filepath_jpg = f"{ image_filepath_without_extension }.jpg"
-    image.save(image_filepath_jpg, format="JPEG")
-    if os.path.exists(image_filepath_jpg):
+    image_filepath_with_jpg_extension= f"{ image_filepath_without_extension }.jpg"
+    image.save(image_filepath_with_jpg_extension, format="JPEG")
+    if os.path.exists(image_filepath_with_jpg_extension):
         os.remove(image_filepath)
-    return image_filepath_jpg
+    return image_filepath_with_jpg_extension
 
 
 def change_image_size_proportions(image_filepath: str):

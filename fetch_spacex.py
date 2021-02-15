@@ -16,7 +16,7 @@ from handler import (
 def fetch_spacex_launch(
     image_link_api: str, launch_id: str, image_folder: str = "./images"
 ) -> list:
-    images_filepaths = []
+    image_filepaths = []
     image_link_api = f"{ image_link_api }/{ launch_id }"
     spacex_api_conten = get_data_from_link(image_link_api)
     spacex_image_links = spacex_api_conten.json().get("links").get("flickr_images")
@@ -24,9 +24,9 @@ def fetch_spacex_launch(
         image_filename = f"{ launch_id }spacex{ image_number }.jpg"
         image_filepath = download_image(image_link, image_filename, image_folder)
         change_image_size_proportions(image_filepath)
-        image_filepath_jpg = convert_image_to_jpg(image_filepath)
-        images_filepaths.append(image_filepath_jpg)
-    return images_filepaths
+        image_jpg_filepath = convert_image_to_jpg(image_filepath)
+        image_filepaths.append(image_jpg_filepath)
+    return image_filepaths
 
 
 def main():
