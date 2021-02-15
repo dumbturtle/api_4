@@ -15,7 +15,6 @@ def get_data_from_link(link: str) -> requests.models.Response:
 def write_image_to_file(data: bytes, full_path_file: str) -> str:
     with open(full_path_file, "wb") as file:
         file.write(data)
-    return full_path_file
 
 
 def download_image(
@@ -26,24 +25,20 @@ def download_image(
     Path(f"./{ image_folder }").mkdir(parents=True, exist_ok=True)
     filepath = os.path.join(checked_folder, checked_filename)
     image_data = get_data_from_link(image_link)
-    file_with_data_filepath = write_image_to_file(image_data.content, filepath)
-    return file_with_data_filepath
+    write_image_to_file(image_data.content, filepath)
+    return filepath
 
 
 def convert_image_to_jpg(image_filepath: str) -> str:
     image = Image.open(image_filepath)
-    image_full_filename = os.path.basename(image_filepath)
-    image_extension = os.path.splitext(image_full_filename)[1]
+    image_filepath_without_extension,image_extension = os.path.splitext(image_filepath)
     if image_extension == ".jpg":
         return image_filepath
-    image_full_dirpath = os.path.dirname(image_filepath)
-    image_filename = os.path.splitext(image_full_filename)[0]
-    image_filename_jpg = f"{ image_filename }.jpg"
-    image_full_filepath_jpg = os.path.join(image_full_dirpath, image_filename_jpg)
-    image.save(image_full_filepath_jpg, format="JPEG")
-    if os.path.exists(image_full_filepath_jpg):
+    image_filepath_jpg = f"{ image_filepath_without_extension }.jpg"
+    image.save(image_filepath_jpg, format="JPEG")
+    if os.path.exists(image_filepath_jpg):
         os.remove(image_filepath)
-    return image_full_filepath_jpg
+    return image_filepath_jpg 
 
 
 def change_image_size_proportions(image_filepath: str):
