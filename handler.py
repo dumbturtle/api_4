@@ -1,4 +1,5 @@
 import os
+from urllib.parse import unquote, urlsplit
 
 import requests
 from pathvalidate import sanitize_filename, sanitize_filepath
@@ -33,7 +34,7 @@ def convert_image_to_jpg(image_filepath: str) -> str:
     if image_extension == ".jpg":
         return image_filepath
     try:
-        image_filepath_with_jpg_extension= f"{ image_filepath_without_extension }.jpg"
+        image_filepath_with_jpg_extension = f"{ image_filepath_without_extension }.jpg"
         image.save(image_filepath_with_jpg_extension, format="JPEG")
     finally:
         os.remove(image_filepath)
@@ -51,5 +52,7 @@ def change_image_size_proportions(image_filepath: str):
 
 
 def get_image_extension(image_link: str) -> str:
-    link_image_extension = image_link.split(".")[-1]
-    return link_image_extension
+    image_split_link = urlsplit(image_link)
+    image_split_link_unquote = unquote(image_split_link.path)
+    image_link_extension = os.path.splitext(image_split_link_unquote)[1]
+    return image_link_extension

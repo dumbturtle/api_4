@@ -10,27 +10,24 @@ def check_ratio(image_filepath: str) -> bool:
     height, width = image.size
     ratio = height / width
     ratio_limit = 0.9
-    if ratio < ratio_limit:
-        return False
-    return True
+    return ratio > ratio_limit
 
 
 def main():
     load_dotenv()
     bot = Bot()
-    images_folder = os.environ["IMAGES_FOLDER"]
-    images = os.listdir(images_folder)
+    image_folder = os.environ["IMAGE_FOLDER"]
+    images = os.listdir(image_folder)
     bot.login(
         username=os.environ["INSTAGRAM_USERNAME"],
         password=os.environ["INSTAGRAM_PASSWORD"],
     )
     for image in images:
-        string_filepath = os.path.join(images_folder, image)
-        if check_ratio(string_filepath):
-            bot.upload_photo(string_filepath, caption=string_filepath)
-            print(f"{ image }: { bot.api.last_response.status_code }")
+        filepath = os.path.join(image_folder, image)
+        if not check_ratio(filepath):
+            print(f"Неверное соотношение сторон: { image }")
             continue
-        print(f"Неверное соотношение сторон: { image }")
+        bot.upload_photo(filepath, caption=filepath)
 
 
 if __name__ == "__main__":
