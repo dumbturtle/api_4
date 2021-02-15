@@ -1,13 +1,17 @@
 import os
+from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-from handler import (change_image_size_proportions, convert_image_to_jpg,
-                     download_image, get_data_from_link, get_image_extension)
-
-load_dotenv()
+from handler import (
+    change_image_size_proportions,
+    convert_image_to_jpg,
+    download_image,
+    get_data_from_link,
+    get_image_extension,
+)
 
 
 def fetch_hable_photo(
@@ -36,11 +40,13 @@ def fetch_hable_image_id(collection_link_api: str, collection_name: str) -> list
 
 
 def main():
+    load_dotenv()
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
     hable_image_link_api = os.environ["HABLE_IMAGE_LINK_API"]
     hable_collection_link_api = os.environ["HABLE_COLLECTION_LINK_API"]
     hable_collection_name = os.environ["HABLE_COLLECTION_NAME"]
     image_folder = os.environ["IMAGE_FOLDER"]
+    Path(f"./{ image_folder }").mkdir(parents=True, exist_ok=True)
     try:
         hable_image_range_id = fetch_hable_image_id(
             hable_collection_link_api, hable_collection_name
