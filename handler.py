@@ -37,16 +37,16 @@ def convert_image_to_jpg(image_filepath: str) -> str:
     if os.path.exists(image_filepath_with_jpg_extension):
         os.remove(image_filepath)
     return image_filepath_with_jpg_extension
-
+    
 
 def change_image_size_proportions(image_filepath: str):
     image = Image.open(image_filepath)
-    height, width = image.size
-    if height > 1080 or width > 1080:
-        image.thumbnail((1080, 1080))
+    image_height, image_width = image.size
+    image_limit_height = 1080
+    image_limit_width = 1080
+    if image_height > image_limit_height or image_width > image_limit_width:
+        image.thumbnail((image_limit_height, image_limit_width))
         image.save(image_filepath)
-        return image_filepath
-    return image_filepath
 
 
 def get_image_extension(image_link: str) -> str:

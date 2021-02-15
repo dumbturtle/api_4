@@ -4,23 +4,26 @@ from dotenv import load_dotenv
 from instabot import Bot
 from PIL import Image
 
-load_dotenv()
-bot = Bot()
-
 
 def check_ratio(image_filepath: str) -> bool:
     image = Image.open(image_filepath)
     height, width = image.size
     ratio = height / width
-    if ratio < 0.9:
+    ratio_limit = 0.9
+    if ratio < ratio_limit:
         return False
     return True
 
 
 def main():
+    load_dotenv()
+    bot = Bot()
     images_folder = os.environ["IMAGES_FOLDER"]
     images = os.listdir(images_folder)
-    bot.login(username=os.environ["INSTAGRAM_USERNAME"], password=os.environ["INSTAGRAM_PASSWORD"])
+    bot.login(
+        username=os.environ["INSTAGRAM_USERNAME"],
+        password=os.environ["INSTAGRAM_PASSWORD"],
+    )
     for image in images:
         string_filepath = os.path.join(images_folder, image)
         if check_ratio(string_filepath):
