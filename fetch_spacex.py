@@ -2,15 +2,11 @@ import os
 from pathlib import Path
 
 import requests
-from dotenv import load_dotenv
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-from handler import (
-    change_image_size_proportions,
-    convert_image_to_jpg,
-    download_image,
-    get_data_from_link,
-)
+from dotenv import load_dotenv
+from handler import (change_image_size_proportions, convert_image_to_jpg,
+                     download_image, get_data_from_link, get_image_extension)
 
 
 def fetch_spacex_launch(
@@ -21,8 +17,10 @@ def fetch_spacex_launch(
     spacex_api_content = get_data_from_link(image_link_api)
     spacex_image_links = spacex_api_content.json().get("links").get("flickr_images")
     for image_number, image_link in enumerate(spacex_image_links):
-        image_filename = f"{ launch_id }spacex{ image_number }.jpg"
-        image_filepath = download_image(image_link, image_filename, image_folder)
+        image_extension = get_image_extension(image_link)
+        image_filename = f"{ launch_id }spacex{ image_number}{ image_extension }"
+        image_filepath = download_image(
+            image_link, image_filename, image_folder)
         change_image_size_proportions(image_filepath)
         image_jpg_filepath = convert_image_to_jpg(image_filepath)
         image_filepaths.append(image_jpg_filepath)
