@@ -42,18 +42,18 @@ def fetch_hubble_image_id(collection_link_api: str, collection_name: str) -> lis
 def main():
     load_dotenv()
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-    hubble_image_link_api = os.environ["HUBBLE_IMAGE_LINK_API"]
-    hubble_collection_link_api = os.environ["HUBBLE_COLLECTION_LINK_API"]
+    hubble_image_api_link = os.environ["HUBBLE_IMAGE_API_LINK"]
+    hubble_collection_api_link = os.environ["HUBBLE_COLLECTION_API_LINK"]
     hubble_collection_name = os.environ["HUBBLE_COLLECTION_NAME"]
     image_folder = os.environ["IMAGE_FOLDER"]
     Path(f"./{ image_folder }").mkdir(parents=True, exist_ok=True)
     try:
         hubble_image_ids = fetch_hubble_image_id(
-            hubble_collection_link_api, hubble_collection_name
+            hubble_collection_api_link, hubble_collection_name
         )
         for hubble_image_id in hubble_image_ids:
             fetched_images = fetch_hubble_photo(
-                hubble_image_link_api, hubble_image_id, image_folder
+                hubble_image_api_link, hubble_image_id, image_folder
             )
             print(fetched_images)
     except (requests.ConnectionError, requests.HTTPError):
