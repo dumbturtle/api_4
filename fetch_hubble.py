@@ -14,18 +14,18 @@ from handler import (
 )
 
 
-def fetch_hable_photo(
+def fetch_hubble_photo(
     image_link_api: str, image_id: int, image_folder: str = "./images"
 ) -> list:
     image_filepaths = []
-    hable_api_content = get_data_from_link(f"{image_link_api}{image_id}")
-    hable_image_links = [
+    hubble_api_content = get_data_from_link(f"{image_link_api}{image_id}")
+    hubble_image_links = [
         f'https:{image_info.get("file_url")}'
-        for image_info in hable_api_content.json().get("image_files")
+        for image_info in hubble_api_content.json().get("image_files")
     ]
-    for image_number, image_link in enumerate(hable_image_links):
+    for image_number, image_link in enumerate(hubble_image_links):
         image_extension = get_image_extension(image_link)
-        image_filename = f"{ image_id }hable{ image_number}.{ image_extension }"
+        image_filename = f"{ image_id }hubble{ image_number}.{ image_extension }"
         image_filepath = download_image(image_link, image_filename, image_folder)
         change_image_size_proportions(image_filepath)
         image_jpg_filepath = convert_image_to_jpg(image_filepath)
@@ -33,27 +33,27 @@ def fetch_hable_photo(
     return image_filepaths
 
 
-def fetch_hable_image_id(collection_link_api: str, collection_name: str) -> list:
-    hable_api_content = get_data_from_link(f"{collection_link_api}{collection_name}")
-    hable_image_ids = [image_id.get("id") for image_id in hable_api_content.json()]
-    return hable_image_ids
+def fetch_hubble_image_id(collection_link_api: str, collection_name: str) -> list:
+    hubble_api_content = get_data_from_link(f"{collection_link_api}{collection_name}")
+    hubble_image_ids = [image_id.get("id") for image_id in hubble_api_content.json()]
+    return hubble_image_ids
 
 
 def main():
     load_dotenv()
     requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-    hable_image_link_api = os.environ["HABLE_IMAGE_LINK_API"]
-    hable_collection_link_api = os.environ["HABLE_COLLECTION_LINK_API"]
-    hable_collection_name = os.environ["HABLE_COLLECTION_NAME"]
+    hubble_image_link_api = os.environ["HUBBLE_IMAGE_LINK_API"]
+    hubble_collection_link_api = os.environ["HUBBLE_COLLECTION_LINK_API"]
+    hubble_collection_name = os.environ["HUBBLE_COLLECTION_NAME"]
     image_folder = os.environ["IMAGE_FOLDER"]
     Path(f"./{ image_folder }").mkdir(parents=True, exist_ok=True)
     try:
-        hable_image_range_id = fetch_hable_image_id(
-            hable_collection_link_api, hable_collection_name
+        hubble_image_ids = fetch_hubble_image_id(
+            hubble_collection_link_api, hubble_collection_name
         )
-        for hable_image_id in hable_image_range_id:
-            fetched_images = fetch_hable_photo(
-                hable_image_link_api, hable_image_id, image_folder
+        for hubble_image_id in hubble_image_ids:
+            fetched_images = fetch_hubble_photo(
+                hubble_image_link_api, hubble_image_id, image_folder
             )
             print(fetched_images)
     except (requests.ConnectionError, requests.HTTPError):

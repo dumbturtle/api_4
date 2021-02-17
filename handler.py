@@ -12,8 +12,8 @@ def get_data_from_link(link: str) -> requests.models.Response:
     return link_response
 
 
-def write_image_to_file(data: bytes, full_path_file: str) -> str:
-    with open(full_path_file, "wb") as file:
+def write_image_to_file(data: bytes, filepath: str) -> str:
+    with open(filepath, "wb") as file:
         file.write(data)
 
 
@@ -44,15 +44,15 @@ def convert_image_to_jpg(image_filepath: str) -> str:
 def change_image_size_proportions(image_filepath: str):
     image = Image.open(image_filepath)
     image_height, image_width = image.size
-    image_limit_height = 1080
-    image_limit_width = 1080
-    if image_height > image_limit_height or image_width > image_limit_width:
-        image.thumbnail((image_limit_height, image_limit_width))
+    image_height_limit = 1080
+    image_width_limit = 1080
+    if image_height > image_height_limit or image_width > image_width_limit:
+        image.thumbnail((image_height_limit, image_width_limit))
         image.save(image_filepath)
 
 
 def get_image_extension(image_link: str) -> str:
-    image_split_link = urlsplit(image_link)
-    image_split_link_unquote = unquote(image_split_link.path)
-    image_link_extension = os.path.splitext(image_split_link_unquote)[1]
-    return image_link_extension
+    image_link_parse = urlsplit(image_link)
+    image_path = unquote(image_link_parse.path)
+    image_extension = os.path.splitext(image_path)[1]
+    return image_extension

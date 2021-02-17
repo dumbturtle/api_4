@@ -18,8 +18,8 @@ def fetch_spacex_launch(
 ) -> list:
     image_filepaths = []
     image_link_api = f"{ image_link_api }/{ launch_id }"
-    spacex_api_conten = get_data_from_link(image_link_api)
-    spacex_image_links = spacex_api_conten.json().get("links").get("flickr_images")
+    spacex_api_content = get_data_from_link(image_link_api)
+    spacex_image_links = spacex_api_content.json().get("links").get("flickr_images")
     for image_number, image_link in enumerate(spacex_image_links):
         image_filename = f"{ launch_id }spacex{ image_number }.jpg"
         image_filepath = download_image(image_link, image_filename, image_folder)

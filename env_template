@@ -5,10 +5,10 @@ INSTAGRAM_PASSWORD="Your password"
 #Download settings
 IMAGE_FOLDER="images"
 
-#Hable API settings
-HABLE_IMAGE_LINK_API="http://hubblesite.org//api/v3/image/"
-HABLE_COLLECTION_LINK_API="http://hubblesite.org//api/v3/images/"
-HABLE_COLLECTION_NAME="stsci_gallery"
+#Hubble API settings
+HUBBLE_IMAGE_API_LINK="http://hubblesite.org/api/v3/image/"
+HUBBLE_COLLECTION_API_LINK="http://hubblesite.org/api/v3/images/"
+HUBBLE_COLLECTION_NAME="stsci_gallery"
 
 #SpaceX API settings
 SPACEX_IMAGE_LINK_API="https://api.spacexdata.com/v3/launches" 
