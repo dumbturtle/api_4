@@ -11,5 +11,5 @@ HUBBLE_COLLECTION_API_LINK="http://hubblesite.org/api/v3/images/"
 HUBBLE_COLLECTION_NAME="stsci_gallery"
 
 #SpaceX API settings
-SPACEX_IMAGE_LINK_API="https://api.spacexdata.com/v3/launches" 
+SPACEX_IMAGE_API_LINK="https://api.spacexdata.com/v3/launches" 
 LAUNCH_ID="64"

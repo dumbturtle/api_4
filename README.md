@@ -39,27 +39,27 @@ $ python load_instagram.py
 
 #### Параметры скрипта скачивания фото с телескопа Hubble (fetch_hubble.py).
 
-- `HUBBLE_IMAGE_LINK_API` в данном параметре указывается ссылка на раздел API с фотографиями. 
-- `HUBBLE_COLLECTION_LINK_API` в данном параметре указывается ссылка на раздел API с коллекциями фотографий.
+- `HUBBLE_IMAGE_API_LINK` в данном параметре указывается ссылка на раздел API с фотографиями. 
+- `HUBBLE_COLLECTION_API_LINK` в данном параметре указывается ссылка на раздел API с коллекциями фотографий.
 - `HUBBLE_COLLECTION_NAME` в данном параметре указывается название коллекции. Список коллекций [ссылка](http://hubblesite.org/api/documentation#images).
 
 Пример раздела `Hubble API settings` в файле конфигурации:
 ```
 #Hubble API settings
-HUBBLE_IMAGE_LINK_API="http://hubblesite.org//api/v3/image/"
-HUBBLE_COLLECTION_LINK_API="http://hubblesite.org//api/v3/images/"
+HUBBLE_IMAGE_API_LINK="http://hubblesite.org/api/v3/image/"
+HUBBLE_COLLECTION_API_LINK="http://hubblesite.org/api/v3/images/"
 HUBBLE_COLLECTION_NAME="stsci_gallery"
 ```
 
 #### Параметры скрипта скачивания фото запусков компании SpaceX (fetch_spacex.py).
 
-- `SPACEX_IMAGE_LINK_API` в данном параметре указывается ссылка на раздел API в котором хранятся фотографии запусков.
+- `SPACEX_IMAGE_API_LINK` в данном параметре указывается ссылка на раздел API в котором хранятся фотографии запусков.
 - `LAUNCH_ID` в данном параметре указывается номер запуска. Для получения фотографий последнего запуска, необходимо присвоить переменной значение `last`.
 
 Пример раздела `SpaceX API settings` в файле конфигурации:
 ```
 #SpaceX API settings
-SPACEX_IMAGE_LINK_API="https://api.spacexdata.com/v3/launches" 
+SPACEX_IMAGE_API_LINK="https://api.spacexdata.com/v3/launches" 
 LAUNCH_ID="64"
 ```
 

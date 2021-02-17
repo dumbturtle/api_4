@@ -5,8 +5,13 @@ import requests
 from dotenv import load_dotenv
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
-from handler import (change_image_size_proportions, convert_image_to_jpg,
-                     download_image, get_data_from_link, get_image_extension)
+from handler import (
+    change_image_size_proportions,
+    convert_image_to_jpg,
+    download_image,
+    get_data_from_link,
+    get_image_extension,
+)
 
 
 def fetch_hubble_photo(
@@ -15,25 +20,26 @@ def fetch_hubble_photo(
     image_filepaths = []
     hubble_api_content = get_data_from_link(f"{image_link_api}{image_id}")
     hubble_image_links = [
-        f'https:{image_info.get("file_url")}'
-        for image_info in hubble_api_content.json().get("image_files")
+        f'https:{image_information.get("file_url")}'
+        for image_information in hubble_api_content.json().get("image_files")
     ]
     image_link_last = hubble_image_links[-1]
     image_extension = get_image_extension(image_link_last)
     image_filename = f"{ image_id }hubble{ image_extension }"
-    image_filepath = download_image(
-        image_link_last, image_filename, image_folder)
+    image_filepath = download_image(image_link_last, image_filename, image_folder)
     change_image_size_proportions(image_filepath)
     image_jpg_filepath = convert_image_to_jpg(image_filepath)
     image_filepaths.append(image_jpg_filepath)
     return image_filepaths
 
 
-def fetch_hubble_image_ids(collection_link_api: str, collection_name: str) -> list:
+def fetch_hubble_image_ids(collection_api_link: str, collection_name: str) -> list:
     hubble_api_content = get_data_from_link(
-        f"{collection_link_api}{collection_name}")
-    hubble_image_ids = [image_information.get(
-        "id") for image_information in hubble_api_content.json()]
+        f"{ collection_api_link }{ collection_name }"
+    )
+    hubble_image_ids = [
+        image_information.get("id") for image_information in hubble_api_content.json()
+    ]
     return hubble_image_ids
 
 
