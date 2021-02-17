@@ -18,14 +18,14 @@ def fetch_hubble_photo(
         f'https:{image_info.get("file_url")}'
         for image_info in hubble_api_content.json().get("image_files")
     ]
-    for image_number, image_link in enumerate(hubble_image_links):
-        image_extension = get_image_extension(image_link)
-        image_filename = f"{ image_id }hubble{ image_number}.{ image_extension }"
-        image_filepath = download_image(
-            image_link, image_filename, image_folder)
-        change_image_size_proportions(image_filepath)
-        image_jpg_filepath = convert_image_to_jpg(image_filepath)
-        image_filepaths.append(image_jpg_filepath)
+    image_link_last = hubble_image_links[-1]
+    image_extension = get_image_extension(image_link_last)
+    image_filename = f"{ image_id }hubble{ image_extension }"
+    image_filepath = download_image(
+        image_link_last, image_filename, image_folder)
+    change_image_size_proportions(image_filepath)
+    image_jpg_filepath = convert_image_to_jpg(image_filepath)
+    image_filepaths.append(image_jpg_filepath)
     return image_filepaths
 
 
