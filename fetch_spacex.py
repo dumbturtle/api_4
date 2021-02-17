@@ -40,7 +40,6 @@ def main():
         fetched_images = fetch_spacex_launch(
             spacex_image_link_api, launch_id, image_folder
         )
-        print(fetched_images)
     except (requests.ConnectionError, requests.HTTPError):
         print("Что-то пошло не так. Проверьте соединение с интернетом.")
 

@@ -55,7 +55,6 @@ def main():
             fetched_images = fetch_hubble_photo(
                 hubble_image_api_link, hubble_image_id, image_folder
             )
-            print(fetched_images)
     except (requests.ConnectionError, requests.HTTPError):
         print("Что-то пошло не так. Проверьте соединение с интернетом.")
 
