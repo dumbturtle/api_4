@@ -16,21 +16,15 @@ from handler import (
 
 def fetch_hubble_photo(
     image_link_api: str, image_id: int, image_folder: str = "./images"
-) -> list:
+) -> str:
     image_filepaths = []
     hubble_api_content = get_data_from_link(f"{image_link_api}{image_id}")
-    hubble_image_links = [
-        f'https:{image_information.get("file_url")}'
-        for image_information in hubble_api_content.json().get("image_files")
-    ]
-    image_link_last = hubble_image_links[-1]
-    image_extension = get_image_extension(image_link_last)
+    hubble_api_image_link = hubble_api_content.json().get("image_files")[-1].get("file_url")
+    image_link = f'https:{ hubble_api_image_link }'
+    image_extension = get_image_extension(image_link)
     image_filename = f"{ image_id }hubble{ image_extension }"
-    image_filepath = download_image(image_link_last, image_filename, image_folder)
-    change_image_size_proportions(image_filepath)
-    image_jpg_filepath = convert_image_to_jpg(image_filepath)
-    image_filepaths.append(image_jpg_filepath)
-    return image_filepaths
+    image_filepath = download_image(image_link, image_filename, image_folder)
+    return image_filepath
 
 
 def fetch_hubble_image_ids(collection_api_link: str, collection_name: str) -> list:
