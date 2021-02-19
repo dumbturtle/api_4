@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from instabot import Bot
 from PIL import Image
 
+from handler import change_image_size_proportions, convert_image_to_jpg
+
 
 def check_ratio(image_filepath: str) -> bool:
     image = Image.open(image_filepath)
@@ -24,10 +26,12 @@ def main():
     )
     for image in images:
         filepath = os.path.join(image_folder, image)
-        if not check_ratio(filepath):
+        change_image_size_proportions(filepath)
+        image_jpg_filepath = convert_image_to_jpg(filepath)
+        if not check_ratio(image_jpg_filepath):
             print(f"Неверное соотношение сторон: { image }")
             continue
-        bot.upload_photo(filepath, caption=filepath)
+        bot.upload_photo(image_jpg_filepath, caption=filepath)
 
 
 if __name__ == "__main__":

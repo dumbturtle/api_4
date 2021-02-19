@@ -6,7 +6,7 @@ from pathvalidate import sanitize_filename, sanitize_filepath
 from PIL import Image
 
 
-def get_data_from_link(link: str) -> requests.models.Response:
+def get_response_from_link(link: str) -> requests.models.Response:
     link_response = requests.get(link, verify=False, allow_redirects=False)
     link_response.raise_for_status()
     return link_response
@@ -23,14 +23,15 @@ def download_image(
     sanitized_folder = sanitize_filepath(image_folder)
     sanitized_filename = sanitize_filename(image_filename)
     filepath = os.path.join(sanitized_folder, sanitized_filename)
-    image_data = get_data_from_link(image_link)
+    image_data = get_response_from_link(image_link)
     write_image_to_file(image_data.content, filepath)
     return filepath
 
 
 def convert_image_to_jpg(image_filepath: str) -> str:
     image = Image.open(image_filepath)
-    image_filepath_without_extension, image_extension = os.path.splitext(image_filepath)
+    image_filepath_without_extension, image_extension = os.path.splitext(
+        image_filepath)
     if image_extension == ".jpg":
         return image_filepath
     try:

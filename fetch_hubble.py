@@ -9,7 +9,7 @@ from handler import (
     change_image_size_proportions,
     convert_image_to_jpg,
     download_image,
-    get_data_from_link,
+    get_response_from_link,
     get_image_extension,
 )
 
@@ -18,8 +18,9 @@ def fetch_hubble_photo(
     image_link_api: str, image_id: int, image_folder: str = "./images"
 ) -> str:
     image_filepaths = []
-    hubble_api_content = get_data_from_link(f"{image_link_api}{image_id}")
-    hubble_api_image_link = hubble_api_content.json().get("image_files")[-1].get("file_url")
+    hubble_api_content = get_response_from_link(f"{image_link_api}{image_id}")
+    hubble_api_image_link = hubble_api_content.json().get(
+        "image_files")[-1].get("file_url")
     image_link = f'https:{ hubble_api_image_link }'
     image_extension = get_image_extension(image_link)
     image_filename = f"{ image_id }hubble{ image_extension }"
@@ -28,7 +29,7 @@ def fetch_hubble_photo(
 
 
 def fetch_hubble_image_ids(collection_api_link: str, collection_name: str) -> list:
-    hubble_api_content = get_data_from_link(
+    hubble_api_content = get_response_from_link(
         f"{ collection_api_link }{ collection_name }"
     )
     hubble_image_ids = [
