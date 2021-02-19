@@ -19,10 +19,10 @@ def fetch_hubble_photo(
 ) -> str:
     image_filepaths = []
     hubble_api_content = get_response_from_link(f"{image_link_api}{image_id}")
-    hubble_api_image_link = hubble_api_content.json().get(
+    hubble_api_last_image_link = hubble_api_content.json().get(
         "image_files")[-1].get("file_url")
-    image_link = f'https:{ hubble_api_image_link }'
-    image_extension = get_image_extension(image_link)
+    last_image_link = f'https:{ hubble_api_last_image_link }'
+    image_extension = get_image_extension(last_image_link)
     image_filename = f"{ image_id }hubble{ image_extension }"
     image_filepath = download_image(image_link, image_filename, image_folder)
     return image_filepath
