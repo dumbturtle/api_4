@@ -35,9 +35,7 @@ def main():
     image_folder = os.environ["IMAGE_FOLDER"]
     Path(f"./{ image_folder }").mkdir(parents=True, exist_ok=True)
     try:
-        fetched_images = fetch_spacex_launch(
-            spacex_image_api_link, launch_id, image_folder
-        )
+        fetch_spacex_launch(spacex_image_api_link, launch_id, image_folder)
     except (requests.ConnectionError, requests.HTTPError):
         print("Что-то пошло не так. Проверьте соединение с интернетом.")
 
