@@ -42,7 +42,7 @@ def convert_image_to_jpg(image_filepath: str) -> str:
     return image_filepath_with_jpg_extension
 
 
-def reduce_size_photo_preserving_proportions(image_filepath: str):
+def reduce_photo_size_preserving_proportions(image_filepath: str):
     image = Image.open(image_filepath)
     image_height, image_width = image.size
     image_height_limit = 1080

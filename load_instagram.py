@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from instabot import Bot
 from PIL import Image
 
-from handler import reduce_size_photo_preserving_proportions, convert_image_to_jpg
+from handler import reduce_photo_size_preserving_proportions, convert_image_to_jpg
 
 
 def check_ratio(image_filepath: str) -> bool:
@@ -26,7 +26,7 @@ def main():
     )
     for image in images:
         filepath = os.path.join(image_folder, image)
-        reduce_size_photo_preserving_proportions(filepath)
+        reduce_photo_size_preserving_proportions(filepath)
         image_jpg_filepath = convert_image_to_jpg(filepath)
         if not check_ratio(image_jpg_filepath):
             print(f"Неверное соотношение сторон: { image }")
